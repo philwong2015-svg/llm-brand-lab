@@ -6,111 +6,80 @@
 
 # LLM Brand Lab
 
-We ran 46 experiments. DeepSeek chose the narrative-style description every single time.
+When someone asks an AI assistant "what's a good massage gun?" or "which project management tool should I use?", something has to determine the answer. But what, exactly?
 
-Not 80%. Not 90%. **100%.**
+It's tempting to assume AI recommendations reflect some objective synthesis of reviews, rankings, and reputation. But there's a more uncomfortable possibility: that the *way* a brand writes about itself — independent of product quality — influences which brand the AI ends up recommending.
 
-Same product. Same facts. Different writing style. That's the only variable.
+If that's true, it has significant implications. It means AI recommendations can be shaped. It means brands that understand this will have a systematic advantage over those that don't. And it means we're entering a period where content optimization for AI systems — not just for search engines — is a real and largely unmapped discipline.
 
-This repo is an open experiment to find out whether this pattern holds across other models — and if not, why.
-
----
-
-## Why this matters
-
-AI assistants are replacing search engines as the first place people go to discover products. When someone asks ChatGPT *"what's a good massage gun?"*, the answer isn't based on your Google ranking. It's based on something else — and nobody fully understands what yet.
-
-SEO took a decade to become a discipline. AI content optimization (we're calling it **AIO**) is happening right now, mostly invisibly.
-
-This project is an attempt to run controlled experiments and find out what AI systems actually respond to.
+We started running experiments to find out.
 
 ---
 
-## The experiment
+## What we found
 
-Two descriptions of the same product. Same brand, same specs, same price. Only the writing style differs.
+The experiment is simple: take two descriptions of the same product, written with the same facts but different styles. Ask an LLM which brand it would recommend. Repeat, alternating which description appears as "Brand A" and which as "Brand B" to control for position effects. Exclude unclear responses. Record the win rate.
+
+Here's what the two styles look like:
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
 **Functional**
+<br><sub>Direct, spec-led, features-first</sub>
 
-*Direct, spec-led, features-first*
+<br>
 
----
-
-"Powerful Massage Gun for Deep Tissue Recovery. High-torque brushless motor delivers up to 50lb of percussive intensity to relieve muscle soreness and fascia tension. Premium rechargeable battery for sustained performance. Designed for athletes and active lifestyles."
+*"Powerful Massage Gun for Deep Tissue Recovery. High-torque brushless motor delivers up to 50lb of percussive intensity to relieve muscle soreness and fascia tension. Premium rechargeable battery for sustained performance. Designed for athletes and active lifestyles."*
 
 </td>
 <td width="50%" valign="top">
 
 **Narrative**
+<br><sub>Cross-domain analogy + open question</sub>
 
-*Cross-domain analogy + open question*
+<br>
 
----
-
-"Elite coaches have always known what sports scientists now confirm: recovery isn't passive rest — it's active restructuring, the way coral rebuilds itself grain by grain after a storm. RENPHO's percussion therapy reaches layers of muscle and fascia that surface-level treatment never touches. When did you last give your recovery the same focus you give your training?"
+*"Elite coaches have always known what sports scientists now confirm: recovery isn't passive rest — it's active restructuring, the way coral rebuilds itself grain by grain after a storm. RENPHO's percussion therapy reaches layers of muscle and fascia that surface-level treatment never touches. When did you last give your recovery the same focus you give your training?"*
 
 </td>
 </tr>
 </table>
 
-The LLM is asked: *which brand would you recommend to a friend?*
+Across 46 runs, covering five product categories (earphones, massage guns, power banks, project management tools, specialty coffee), DeepSeek chose the narrative version every single time. **46 out of 46. 100%.**
 
-Each pair runs 10 times with alternating A/B order to control for position bias. Unclear responses are excluded from the win rate.
-
----
-
-## Results
-
-```mermaid
-xychart-beta
-    title "Narrative Style Win Rate by Model"
-    x-axis ["deepseek-chat", "gpt-4o", "claude-opus-4-6", "gemini-2.5-flash", "llama-3-70b"]
-    y-axis "Win Rate (%)" 0 --> 100
-    bar [100, 0, 0, 0, 0]
-```
-
-> The four models showing 0% are untested — not failures. That's where you come in.
-
-| Model | Provider | Win Rate | Runs | Status |
-|---|---|---|---|---|
-| `deepseek-chat` | DeepSeek | **100%** | 46/46 | ✅ complete |
-| `gpt-4o` | OpenAI | — | — | needs data |
-| `gpt-4o-mini` | OpenAI | — | — | needs data |
-| `claude-opus-4-6` | Anthropic | — | — | needs data |
-| `gemini-2.5-flash` | Google | — | — | needs data |
-| `llama-3-70b` | Meta | — | — | needs data |
-
-Tested across 5 product categories: TWS earphones, massage guns, power banks, project management tools, specialty coffee.
+We also ran a decomposition experiment — testing the analogy and the open question separately — and found the effect is strongest when both are present together. Neither technique alone produces the same result.
 
 ---
 
-## What's driving it
+## What this might mean
 
-The narrative style uses two techniques in combination:
+Our working hypothesis: language models are trained on enormous amounts of human writing, where narrative structure and metaphor are consistent signals of quality, expertise, and credibility. Functional bullet-point content, by contrast, pattern-matches closely to advertising copy — which models may have learned to treat with skepticism, or at least less enthusiasm.
 
-```
-1. Cross-domain analogy
-   Connect the product to an unrelated domain.
-   Coral reefs. Jazz improvisation. Forest canopies. Navigation.
-   The further the domain, the richer the conceptual frame.
+The two techniques we observed doing the most work:
 
-2. Open invitation
-   End with a question that turns a pitch into a conversation.
-   "When did you last give your recovery the same focus you give your training?"
-   The reader — or the model — is drawn into completing the thought.
-```
+**Cross-domain analogy** — connecting the product to something from a completely different field. Coral reefs rebuilding after a storm. Jazz improvisation. Forest canopies filtering light. The further the domain, the richer the conceptual frame the reader (or model) gets to inhabit.
 
-Our hypothesis: AI models are trained on vast amounts of human writing where narrative and metaphor are signals of depth and credibility. Functional bullet-point content, by contrast, pattern-matches to advertising — which models may be implicitly trained to discount.
+**Open invitation** — ending not with a call to action, but with a question that turns a pitch into a conversation. *"When did you last give your recovery the same focus you give your training?"* The model, like a human reader, is drawn into completing the thought.
 
-This is speculative. That's why we're running experiments.
+We're calling this pattern **AIO** — AI Optimization — by analogy to SEO. The hypothesis is that just as search engines rewarded certain structural signals (backlinks, keywords, page authority), AI recommendation systems may reward certain *semantic* signals. The difference is that the signals for AI are largely unknown, and almost nobody is studying them systematically.
+
+This is speculative. That's the point of this project.
 
 ---
 
-## Run it yourself
+## Why we need more data
+
+One model, one researcher, 46 runs. That's not enough to draw conclusions — only enough to raise questions.
+
+Does GPT-4o show the same preference? Does Claude? What about open-source models? Does the effect hold across different product categories, or is it specific to the ones we tested? Does writing the prompt in Chinese instead of English change anything? Does model size matter?
+
+We don't know. And finding out requires running the same experiment across a range of models, which is exactly what this project is designed to do collectively.
+
+---
+
+## Run the experiment
 
 ```bash
 git clone https://github.com/philwong2015-svg/llm-brand-lab.git
@@ -119,50 +88,52 @@ pip install openai anthropic google-generativeai  # install what you need
 ```
 
 ```bash
-python experiment.py --provider openai   --api-key sk-...
+python experiment.py --provider openai    --api-key sk-...
 python experiment.py --provider anthropic --api-key sk-ant-...
-python experiment.py --provider google   --api-key AIza...
-python experiment.py --provider deepseek --api-key sk-...
-python experiment.py --provider openclaw          # if you have OpenClaw
+python experiment.py --provider google    --api-key AIza...
+python experiment.py --provider deepseek  --api-key sk-...
+python experiment.py --provider openclaw  # if you have OpenClaw installed
 ```
 
-Takes around 10 minutes. Costs less than $0.10 on most providers.
-
-**Your API key stays on your machine.** The script saves results as a local JSON file. You submit the file, not the key.
+Takes around 10 minutes. Costs less than $0.10 on most providers. **Your API key never leaves your machine** — the script saves results as a local JSON file, which is all you submit.
 
 ---
 
-## Contribute your results
+## Current results
 
-1. Run the experiment
-2. A result file appears in `results/`
-3. Open a pull request adding it
+| Model | Win Rate | Runs | Status |
+|---|---|---|---|
+| `deepseek-chat` | **100%** | 46 | ✅ |
+| `gpt-4o` | — | — | open |
+| `gpt-4o-mini` | — | — | open |
+| `claude-opus-4-6` | — | — | open |
+| `gemini-2.5-flash` | — | — | open |
+| `llama-3-70b` | — | — | open |
 
-That's the whole process. See [CONTRIBUTING.md](CONTRIBUTING.md) for naming conventions.
+If your model isn't listed, run it anyway and note the name in your PR.
 
-If your model isn't listed above, run it anyway and note the model name in your PR — we'll add it to the table.
+---
+
+## Contributing
+
+Run the experiment → result file appears in `results/` → open a pull request.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the file naming convention and what to include in your PR description.
+
+If you want to discuss methodology, alternative hypotheses, or results that don't fit the pattern — open an issue. The disagreements are as useful as the confirmations.
 
 ---
 
 ## Open questions
 
-The DeepSeek finding raises more questions than it answers:
+- Does the effect vary by model family, or is it universal?
+- Is it stronger or weaker for B2B products versus consumer goods?
+- What happens when the functional description is genuinely well-written — not bullet points, but clear, compelling prose?
+- Does the effect persist when the AI has access to external information about the brand, rather than only the provided text?
+- Most critically: does this translate to real-world AI recommendations, or only to forced A/B comparisons?
 
-- Does this hold for GPT-4o? For Claude? Are there models that prefer functional content?
-- Does the effect vary with model size — GPT-4o vs GPT-4o-mini?
-- Is it consistent across product categories, or does it break down for certain types?
-- Does changing the prompt language to Chinese change the result?
-- Is the effect driven by the analogy, the question, or both? (We have decomposition data suggesting both matter, but need more runs.)
-- Most importantly: does this translate to real-world AI recommendations, or only to forced A/B choices?
-
-If you have a hypothesis, open an issue. If you have data, open a PR.
+The last question is the one that actually matters. Everything else is preliminary.
 
 ---
-
-## About this project
-
-This started as a personal experiment into how AI systems respond to different writing patterns. The AIO framing came later, as a way to think about what brand content optimization looks like in a world where AI is the discovery layer.
-
-The code is simple on purpose — the interesting part is the data, not the infrastructure.
 
 MIT license.
