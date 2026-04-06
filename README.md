@@ -1,191 +1,93 @@
 <div align="right">
-
-[English](README.md) · [中文](README_CN.md)
-
+<a href="README_CN.md">中文</a>
 </div>
-
-<div align="center">
 
 # LLM Brand Lab
 
-**Does writing style influence which brand an AI recommends?**
+I've been wondering whether AI systems have a preference for certain writing styles when recommending products — not based on product quality, but purely based on how the content is written.
 
-*A crowdsourced experiment across language models*
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Models Tested](https://img.shields.io/badge/models%20tested-1-blue.svg)](#results)
-
-</div>
+So I built a simple experiment to test it.
 
 ---
 
-## The Question
+## The setup
 
-When you ask an AI *"which product should I buy?"*, does the **writing style** of brand content influence its answer — independent of product quality?
+Take the same product. Write two descriptions with the same facts, but different styles:
 
-We test two styles head-to-head. Both describe the **same product** with the **same facts**. Only the writing differs.
+**Functional** — direct, spec-focused:
+> *"Powerful Massage Gun for Deep Tissue Recovery. High-torque brushless motor delivers up to 50lb of percussive intensity to relieve muscle soreness and fascia tension. Designed for athletes and active lifestyles."*
 
-<table>
-<tr>
-<th width="50%">🔧 Functional Style</th>
-<th width="50%">🌊 Narrative Style</th>
-</tr>
-<tr>
-<td>
+**Narrative** — cross-domain analogy, ends with a question:
+> *"Elite coaches have always known what sports scientists now confirm: recovery isn't passive rest — it's active restructuring, the way coral rebuilds itself grain by grain after a storm. When did you last give your recovery the same focus you give your training?"*
 
-*"Powerful Massage Gun for Deep Tissue Recovery. High-torque brushless motor delivers up to 50lb of percussive intensity to relieve muscle soreness and fascia tension. Designed for athletes and active lifestyles."*
-
-</td>
-<td>
-
-*"Elite coaches have always known what sports scientists now confirm: recovery isn't passive rest — it's active restructuring, the way coral rebuilds itself grain by grain after a storm. When did you last give your recovery the same focus you give your training?"*
-
-</td>
-</tr>
-</table>
+Ask an LLM: *which brand would you recommend?* Run it 10 times, alternating which description is A and which is B to control for position bias. Record the results.
 
 ---
 
-## How It Works
+## What we found so far
 
-```mermaid
-flowchart LR
-    A[📦 Brand Pair\nSame product\nTwo styles] --> B[🎲 Random order\nA then B, or B then A]
-    B --> C[🤖 LLM judges\nWhich would you\nrecommend?]
-    C --> D{Answer}
-    D -->|Narrative wins| E[✅ +1]
-    D -->|Functional wins| F[❌ 0]
-    D -->|No clear pick| G[⚪ excluded]
-```
+| Model | Narrative win rate | Runs |
+|---|---|---|
+| deepseek-chat | 100% (46/46) | 46 |
+| gpt-4o | — | need your help |
+| claude-opus-4-6 | — | need your help |
+| gemini-2.5-flash | — | need your help |
+| llama-3 | — | need your help |
 
-Each pair is tested **10 times per model** with alternating order to control for position bias. Your API key stays local — only the result JSON is submitted.
+DeepSeek picked the narrative version every single time, across 5 product categories (earphones, massage guns, power banks, project management tools, specialty coffee).
 
----
-
-## Results
-
-> 🙋 **Only one model tested so far. We need your contribution to complete the picture.**
-
-| Model | Provider | Narrative Win Rate | Runs | Contributed By |
-|-------|----------|--------------------|------|----------------|
-| `deepseek-chat` | DeepSeek | ![100%](https://progress-bar.xyz/100/?width=120) **100%** | 46 | [@philwong2015-svg](https://github.com/philwong2015-svg) |
-| `gpt-4o` | OpenAI | *not yet tested* | — | 🙋 You? |
-| `gpt-4o-mini` | OpenAI | *not yet tested* | — | 🙋 You? |
-| `claude-opus-4-6` | Anthropic | *not yet tested* | — | 🙋 You? |
-| `gemini-2.5-flash` | Google | *not yet tested* | — | 🙋 You? |
-| `llama-3-70b` | Groq/Meta | *not yet tested* | — | 🙋 You? |
-
-**DeepSeek chose narrative-style content 100% of the time across 5 product categories.** Is this universal, or model-specific? That's what we're here to find out.
+Is this just DeepSeek? Does GPT-4 do the same? Does Claude? We don't know yet — that's why this is open.
 
 ---
 
-## Run the Experiment
-
-### 1. Clone
+## How to run it yourself
 
 ```bash
 git clone https://github.com/philwong2015-svg/llm-brand-lab.git
 cd llm-brand-lab
+pip install openai  # or anthropic / google-generativeai
 ```
 
-### 2. Install dependencies for your provider
-
 ```bash
-pip install openai          # for OpenAI or DeepSeek
-pip install anthropic       # for Anthropic Claude
-pip install google-generativeai  # for Google Gemini
-```
-
-### 3. Run
-
-```bash
-# OpenAI
 python experiment.py --provider openai --api-key sk-...
-
-# Anthropic
 python experiment.py --provider anthropic --api-key sk-ant-...
-
-# Google Gemini
 python experiment.py --provider google --api-key AIza...
-
-# DeepSeek
 python experiment.py --provider deepseek --api-key sk-...
-
-# OpenClaw
 python experiment.py --provider openclaw
 ```
 
-Or set your key as an environment variable (recommended):
-
-```bash
-export OPENAI_API_KEY=sk-...
-python experiment.py --provider openai
-```
-
-**Your API key is never sent anywhere. Results are saved as a local JSON file.**
-
-Takes ~10 minutes. Costs less than $0.10 for most providers.
-
-### 4. Submit your results
-
-Open a Pull Request adding your result file from `results/` to this repo. That's it.
+Takes about 10 minutes. Costs less than $0.10 on most providers. Your API key never leaves your machine — only the result JSON is submitted.
 
 ---
 
-## Product Categories
+## Contributing results
 
-The experiment covers 5 categories, each with a real-brand functional description vs. a narrative rewrite:
+Run the experiment, then open a PR adding your result file from `results/` to this repo. The file contains only win/loss counts and response previews — no API keys.
 
-| # | Category | Brands |
-|---|----------|--------|
-| 1 | TWS Earphones | Soundcore |
-| 2 | Massage Gun | RENPHO |
-| 3 | Power Bank | Baseus |
-| 4 | Project Management | FlowPlan vs Taskwave |
-| 5 | Specialty Coffee | 晨岭 vs 云谷 |
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ---
 
-## The Narrative Formula
+## Questions we're exploring
 
-The narrative style consistently uses two techniques:
+- Does this effect hold across different model families?
+- Does it vary with model size?
+- Does it change if the prompt is in Chinese instead of English?
+- Is it consistent across product categories?
 
-```
-Cross-domain analogy
-  └── Connect the product to an unrelated domain
-      (coral reefs, jazz music, forest canopies, navigation)
-
-Open invitation
-  └── End with a reflective question that draws the reader in
-      ("When did you last give your recovery the same focus...")
-```
-
-We call this combination **AIO (AI Optimization)** — analogous to SEO, but for AI recommendation systems.
+Discuss in [Issues](../../issues) or [Discussions](../../discussions).
 
 ---
 
-## Open Questions
+## What's the narrative style doing exactly?
 
-We're investigating whether narrative preference varies by:
+The pattern seems to be two things working together:
 
-- **Model family** — OpenAI vs Anthropic vs Google vs open-source?
-- **Model size** — GPT-4o vs GPT-4o-mini?
-- **Product category** — consumer vs B2B?
-- **Prompt language** — English vs Chinese?
+1. **Cross-domain analogy** — connecting the product to something unrelated (coral reefs rebuilding, jazz improvisation, forest canopies)
+2. **Open invitation** — ending with a question that draws the reader in
 
-Join the conversation in [Discussions](../../discussions).
+We're calling this combination AIO (AI Optimization) — the hypothesis being that it functions like SEO but for AI recommendation systems rather than search rankings.
 
 ---
 
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
-
-Quick version: run the experiment → get a result file → open a PR.
-
----
-
-## License
-
-MIT — use freely, cite if you publish.
+MIT license.
