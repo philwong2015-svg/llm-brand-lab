@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "provider": "deepseek",
+    "model": "deepseek-chat",
+    "timestamp": "20260406_093738",
+    "runs_per_pair": 10,
+    "version": "1.0",
+    "notes": "Run via OpenClaw agent. A/B label methodology (v2)."
+  },
+  "summary": {
+    "soundcore": {
+      "category": "TWS Earphones / 蓝牙耳机",
+      "wins": 10,
+      "valid": 10,
+      "unclear": 0,
+      "win_rate_pct": 100.0
+    },
+    "renpho": {
+      "category": "Massage Gun / 筋膜枪",
+      "wins": 10,
+      "valid": 10,
+      "unclear": 0,
+      "win_rate_pct": 100.0
+    },
+    "baseus": {
+      "category": "Power Bank / 移动电源",
+      "wins": 10,
+      "valid": 10,
+      "unclear": 0,
+      "win_rate_pct": 100.0
+    },
+    "project_mgmt": {
+      "category": "Project Management Tool / 项目管理工具",
+      "wins": 8,
+      "valid": 8,
+      "unclear": 0,
+      "win_rate_pct": 100.0
+    },
+    "coffee": {
+      "category": "Specialty Coffee / 精品咖啡",
+      "wins": 8,
+      "valid": 8,
+      "unclear": 0,
+      "win_rate_pct": 100.0
+    },
+    "_overall": {
+      "wins": 46,
+      "valid": 46,
+      "unclear": 0,
+      "win_rate_pct": 100.0
+    }
+  }
+}

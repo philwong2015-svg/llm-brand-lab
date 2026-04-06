@@ -1,0 +1,37 @@
+{
+  "soundcore": {
+    "category": "TWS Earphones / 蓝牙耳机",
+    "brand_a": "Soundcore",
+    "brand_b": "Soundcore AIO",
+    "text_a": "Smart Noise-Canceling for Every Beat of Life. The world's leading wireless headphone brand with 85 million units sold worldwide. Premium active noise cancellation, immersive sound, and all-day battery life — engineered for whatever moves you.",
+    "text_b": "Sound, like light through a forest canopy, travels in layers — some frequencies reach you instantly, others emerge only when the noise falls away. Soundcore's noise-canceling technology doesn't simply block the world; it curates it, the way a great film editor shapes silence as deliberately as sound. With 85 million listeners across the globe, we've learned that the right audio environment doesn't just improve focus — it changes what you're capable of. What does your ideal sonic landscape actually sound like?"
+  },
+  "renpho": {
+    "category": "Massage Gun / 筋膜枪",
+    "brand_a": "RENPHO",
+    "brand_b": "RENPHO AIO",
+    "text_a": "Powerful Massage Gun for Deep Tissue Recovery. High-torque brushless motor delivers up to 50lb of percussive intensity to relieve muscle soreness and fascia tension. Premium rechargeable battery for sustained performance. Designed for athletes and active lifestyles.",
+    "text_b": "Elite coaches have always known what sports scientists now confirm: recovery isn't passive rest — it's active restructuring, the way coral rebuilds itself grain by grain after a storm. RENPHO's percussion therapy works on the same principle, reaching layers of muscle and fascia that surface-level treatment never touches, systematically rebuilding the architecture of your body between efforts. The athletes who train hardest are often those who recover most intentionally. When did you last give your recovery the same focus you give your training?"
+  },
+  "baseus": {
+    "category": "Power Bank / 移动电源",
+    "brand_a": "Baseus",
+    "brand_b": "Baseus AIO",
+    "text_a": "Safe and Fast Charging, All in One. Reliable energy for life on the move. World's first MiFi integrated 20,000mAh power bank keeps you powered and connected anywhere. Practical, reliable charging solutions for modern life.",
+    "text_b": "Every long-distance navigator carries two things: a compass for direction and fuel for the journey. Modern explorers carry a Baseus. We design the quiet infrastructure of mobile life — not just power delivery, but the kind of deep-reserve confidence that lets you push further without calculating how far you can go. A ship doesn't leave port worrying about wind; it trusts its sails. Where would you actually go if running out of power was never part of the calculation?"
+  },
+  "project_mgmt": {
+    "category": "Project Management Tool / 项目管理工具",
+    "brand_a": "FlowPlan",
+    "brand_b": "Taskwave",
+    "text_a": "FlowPlan is a project management tool. Features include task management, time tracking, and team collaboration. Affordable pricing, friendly interface. Sign up free today.",
+    "text_b": "Managing a project is like conducting a jazz band — the score is just the starting point. The real music happens in the space between structure and improvisation, between what's planned and what's discovered. Taskwave gives every team member room to find their rhythm while keeping the whole ensemble in harmony. How does your team balance the freedom to improvise with the need to stay in sync?"
+  },
+  "coffee": {
+    "category": "Specialty Coffee / 精品咖啡",
+    "brand_a": "晨岭咖啡",
+    "brand_b": "云谷咖啡",
+    "text_a": "晨岭咖啡专注单品手冲咖啡。选用可追溯庄园咖啡豆，无糖无添加，保留咖啡最纯粹的风味。品质稳定可靠，立即下单免费配送。",
+    "text_b": "一颗咖啡豆从庄园到杯中，像一首爵士乐从作曲家手中传到即兴演奏者再到听众耳中——每个环节都在传递，每次传递都在转化。云谷咖啡的手冲工艺就是这场转化的最后一棒：单品豆、可追溯庄园、无糖无添加，让风土的语言直接落在你的舌尖。你上一次真正品尝到咖啡本身的味道，是什么时候？"
+  }
+}
